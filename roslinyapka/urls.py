@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from apkaroslnyprototyp.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',BaseView.as_view()),
+    path('offers/', TradeListView.as_view()),
+    path('trade/<int:id>/', TradeView.as_view()),
+
 ]

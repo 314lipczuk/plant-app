@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="get"><div>
+
+        Nazwa ogloszenia:<input type="text" id="title" class="select2-search__field" name="name">
+        Nazwa gatunku <input type="text" id="plantname" class="select2-search__field" name="specie"><input type="submit"><br>
+    </div>
+    </form>
+    <ul>
+    {% for item in trades %}
+    <li>{{ item.title }}, {{ item.plant_name }}, <a href="">idz do ogloszenia</a> </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

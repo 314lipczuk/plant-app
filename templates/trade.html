@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ trade.title }} </h2><br>
+    <h3>{{ trade.plant_name }}, Is it still active? {{ trade.is_active }},added: {{ trade.add_date }}</h3><br>
+    <p>{{ trade.content }}</p>
+
+
+
+{% endblock %}
