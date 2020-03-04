@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from apkaroslnyprototyp.models import TradePost, TradeComment
+from apkaroslnyprototyp.forms import TradeForm
 class BaseView(View):
     def get(self, request):
         return render(request,'landing.html')
@@ -18,7 +19,20 @@ class TradeListView(View):
         return render(request,'tradelist.html', {'trades':trades})
 
 
-class TradeView(View):
+class Trade(View):
+    def get(self, request):
+        form = TradeForm()
+        return render(request, 'add.html' , {'form':form})
+
+    def post(self, request):
+        new_trade = TradeForm(request.POST)
+        if new_trade.is_valid():
+            new_trade.save()
+            return HttpResponse("yes")
+
+
+
+class ShowTrade(View):
     def get(self, request, id):
         trade = TradePost.objects.get(pk=id)
         return render(request, 'trade.html', {'trade':trade})
