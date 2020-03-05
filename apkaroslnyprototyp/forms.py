@@ -1,9 +1,18 @@
-from django.forms import ModelForm
-
+from django.forms import ModelForm, Form
+from django.forms import widgets
 from apkaroslnyprototyp.models import *
 from django import forms
+
 
 class TradeForm(ModelForm):
     class Meta:
         model = TradePost
-        exclude = ['id', 'add_date']
+        exclude = ['id', 'add_date', 'reacted', 'creator']
+
+
+class GuideForm(ModelForm):
+    class Meta:
+        model = Guide
+        fields = ['title', 'content']
+
+

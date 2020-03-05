@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    <a href="/guide/">Add a new guide</a>
+    <form method="get"><div>
+        Nazwa poradnika <input type="text" id="guidename" class="select2-search__field" name="name"><input type="submit"><br>
+        Sort by : Most points<input type="radio" name="sort" value="mostpoints" id="most points"><br>
+        Newest<input type="radio" name="sort" value="newest" id="newest">
+    </div>
+    </form>
+{% for guide in guides %}
+    {{ guide.title }} {{ guide.points }}, <a href="/guide/{{ guide.id}}">Details</a> <br>
+{% endfor %}
+{% endblock %}
