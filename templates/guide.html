@@ -1,24 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-{{ guide.content }}
-    {{ guide.title }}
-    {{ guide.points }}
-    <br> Comments:
-    <ul>
-    {% for comment in comments %}
-    <li>{{ comment.content }}, {{ comment.points }}</li>
 
-    {% endfor %}
     </ul>
     <div class="col-md-12">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
           <strong class="d-inline-block mb-2 text-success">Guide</strong>
           <h3 class="mb-0">{{ guide.title }}</h3>
-          <div class="mb-1 text-muted">{{ guide.add_date }}</div>
+          <div class="mb-1 text-muted">Added {{ guide.add_date }} by {{guide.creator.user.username }}</div>
           <p class="mb-auto">{{ guide.content }}</p>
           <a href="/guides/" class="stretched-link">Back to guide list</a>
         </div>
       </div>
+
+        <br> Comments:
+        <ul>
+            {% for comment in comments %}
+            <li>{{ comment.content }}, {{ comment.points }}</li>
+            {% endfor %}
     </div>
 {% endblock %}

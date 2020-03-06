@@ -4,7 +4,8 @@ from django.views import View
 from apkaroslnyprototyp.models import TradePost, TradeComment, Guide, GuideComment, Profile
 from apkaroslnyprototyp.forms import TradeForm, GuideForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.models import User
+import exifread
 class BaseView(View):
     def get(self, request):
         return render(request,'landing.html')
@@ -33,7 +34,11 @@ class TradeView(LoginRequiredMixin,View):
             img = request.FILES['image']
             tp.image = img
             tp.save()
-            return HttpResponse("yes")
+
+            #f = open('', 'rb')
+            #tags = exifread.process_file(f)
+            #print(tags)
+            return redirect('/')
 
 
 
@@ -94,5 +99,12 @@ class TradeListView(View):
 class UserProfile(View):
     def get(self, request, id):
         profile=Profile.objects.get(pk = id)
-        return render(request, 'profile.html', {'profile':profile})
+        posts = TradePost.objects.filter(creator=profile.id)
+        guides= Guide.objects.filter(creator=profile.id)
+        return render(request, 'profile.html', {'profile':profile, 'posts':posts, 'guides':guides})
 
+class SearchUser(View):
+    def get(self, request):
+        qry = request.GET.get('searchuser')
+        result=User.objects.filter(username__contains=qry)
+        return render(request, 'userlist.html', {'users':result})

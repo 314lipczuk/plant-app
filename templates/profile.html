@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
      {{ profile.bio }}
-    {{ profile.location }}
+    {{ profile.location }}<br>
+    Posts:
 
-
+    {% for post in posts %}
+    <p>{{ post.title }}, <a href="/trade/{{ post.id }}">Details</a> </p>
+    {% endfor %}
+    <br>Guides:
+    {% for guide in guides %}
+        <p>{{ guide.title }},<a href="/guide/{{ guide.id }}">Details</a> </p>
+    {% endfor %}
 {% endblock %}

@@ -6,7 +6,7 @@
             <div class="col p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 text-success">Active Trade offer for {{ trade.plant_name }}</strong>
                 <h3 class="mb-0">{{ trade.title }}</h3>
-                <div class="mb-1 text-muted"> posted {{ trade.add_date }}</div>
+                <div class="mb-1 text-muted"> posted {{ trade.add_date }} by {{ trade.creator.user.username }}</div>
                 <p class="mb-auto">{{ trade.content }}</p>
                 <a href="/offers/" class="stretched-link">Back to offer list</a>
             </div>
@@ -14,9 +14,12 @@
     </div>
     {% if trade.image != null %}
 <div>
-        <img src="{{trade.image.url}}" alt="bla" style="width:700px;height:400px;">
+        <img src="{{trade.image.url}}" alt="bla" style="width:30%;height:30%px;">
 </div>
     {% else %}
     {% endif %}
+{% for comment in comments %}
+{{ comment.content }}<br>
 
+{% endfor %}
 {% endblock %}

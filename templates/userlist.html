@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
 
-</body>
-</html>
+ {% for user in users %}
+    <p> User:{{ user.username }},{{ user.profile.bio }}, <a href="/profile/{{ user.profile.id }}">Details</a> </p>
+{% endfor %}
+{% endblock %}

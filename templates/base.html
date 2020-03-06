@@ -30,7 +30,6 @@
             <div class="dropdown-menu" aria-labelledby="dropdown04">
               <a class="dropdown-item" href="/profile/{{ request.user.profile.id }}">{{ request.user }} profile</a>
               <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
-              <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </li>
             {% else %}
@@ -42,7 +41,7 @@
               </li>
             {% endif %}
         </ul>
-        <form class="form-inline my-2 my-md-0" action="/searchuser/">
+        <form method="get" class="form-inline my-2 my-md-0" action="/searchuser/">
           <input class="form-control" type="text" placeholder="Search for users" name="searchuser">
         </form>
       </div>
