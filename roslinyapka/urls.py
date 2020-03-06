@@ -28,6 +28,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('guide/<int:id>/', ShowGuide.as_view()),
     path('guide/', GuideView.as_view()),
-    path('guides/', GuideListView.as_view())
+    path('guides/', GuideListView.as_view()),
+    path('profile/<int:id>', UserProfile.as_view())
 
 ]

@@ -8,7 +8,7 @@
     </form>
     <ul>
     {% for item in trades %}
-    <li>{{ item.title }}, {{ item.plant_name }}, <a href="/showtrade/{{ item.id }}">idz do ogloszenia</a> </li>
+    <li>{{ item.title }}, {{ item.plant_name }}, <a href="/trade/{{ item.id }}">idz do ogloszenia</a> </li>
     {% endfor %}
     </ul>
 {% endblock %}

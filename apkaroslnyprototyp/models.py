@@ -52,3 +52,5 @@ class TradeComment(models.Model):
     points = models.IntegerField(default=0)
     post = models.ForeignKey(TradePost, on_delete=models.CASCADE)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
+
+

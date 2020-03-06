@@ -4,6 +4,18 @@
     <h3>{{ trade.plant_name }}, Is it still active? {{ trade.is_active }},added: {{ trade.add_date }}</h3><br>
     <p>{{ trade.content }}</p>
 
+    </ul>
+    <div class="col-md-5">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-success">Active Trade offer for {{ trade.plant_name }}</strong>
+                <h3 class="mb-0">{{ trade.title }}</h3>
+                <div class="mb-1 text-muted"> posted {{ trade.add_date }}</div>
+                <p class="mb-auto">{{ trade.content }}</p>
+                <a href="/offers/" class="stretched-link">Back to offer list</a>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}

@@ -7,7 +7,12 @@
         Newest<input type="radio" name="sort" value="newest" id="newest">
     </div>
     </form>
-{% for guide in guides %}
-    {{ guide.title }} {{ guide.points }}, <a href="/guide/{{ guide.id}}">Details</a> <br>
-{% endfor %}
+
+    {% for guide in guides %}
+    <div class="row mb-3" style="margin-bottom: 1rem!important;margin-right:-15px;margin-left:-15px;">
+    <div class="col-lg-4 themed-grid-col" style="background-color:rgba(86, 61, 124, .15);border:5px black; padding: 15px">{{ guide.title }}</div>
+    <div class="col-lg-4 themed-grid-col" style="background-color:rgba(86, 61, 124, .15);border:5px black; padding: 15px">{{ guide.points }}</div>
+    <div class="col-lg-4 themed-grid-col" style="background-color:rgba(86, 61, 124, .15);border:5px black; padding: 15px"><a href="/guide/{{ guide.id}}">Details</a></div>
+  </div>
+    {% endfor %}
 {% endblock %}

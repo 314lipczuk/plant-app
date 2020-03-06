@@ -86,3 +86,11 @@ class TradeListView(View):
             filterspecies = request.GET.get('specie')
             trades =trades.filter(plant_name__contains=filterspecies)
         return render(request,'tradelist.html', {'trades':trades})
+
+
+
+class UserProfile(View):
+    def get(self, request, id):
+        profile=Profile.objects.get(pk = id)
+        return render(request, 'profile.html', {'profile':profile})
+
