@@ -7,7 +7,7 @@ from django import forms
 class TradeForm(ModelForm):
     class Meta:
         model = TradePost
-        exclude = ['id', 'add_date', 'reacted', 'creator']
+        exclude = ['id', 'add_date', 'reacted', 'creator', 'image']
 
 
 class GuideForm(ModelForm):

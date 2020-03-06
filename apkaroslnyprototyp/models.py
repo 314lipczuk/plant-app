@@ -44,6 +44,7 @@ class TradePost(models.Model):
     add_date = models.DateTimeField(auto_now_add=True)
     content = models.TextField(null=False)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
+    image = models.ImageField(null=True)
     ##t odo  dodac jeszcze jotpega jakiegs
 
 class TradeComment(models.Model):

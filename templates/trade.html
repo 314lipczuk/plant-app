@@ -1,9 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>{{ trade.title }} </h2><br>
-    <h3>{{ trade.plant_name }}, Is it still active? {{ trade.is_active }},added: {{ trade.add_date }}</h3><br>
-    <p>{{ trade.content }}</p>
-
     </ul>
     <div class="col-md-5">
         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -16,6 +12,11 @@
             </div>
         </div>
     </div>
-
+    {% if trade.image != null %}
+<div>
+        <img src="{{trade.image.url}}" alt="bla" style="width:700px;height:400px;">
+</div>
+    {% else %}
+    {% endif %}
 
 {% endblock %}

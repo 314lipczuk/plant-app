@@ -30,6 +30,8 @@ class TradeView(LoginRequiredMixin,View):
             tp=TradePost.objects.get(title=id)
             p=Profile.objects.get(user_id = request.POST.get('creator'))
             tp.creator = p
+            img = request.FILES['image']
+            tp.image = img
             tp.save()
             return HttpResponse("yes")
 
