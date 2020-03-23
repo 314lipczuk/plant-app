@@ -45,7 +45,9 @@ class TradePost(models.Model):
     content = models.TextField(null=False)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField(null=True)
-    ##t odo  dodac jeszcze jotpega jakiegs
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
+
 
 class TradeComment(models.Model):
     content = models.CharField(max_length=500, null=False)
@@ -53,5 +55,4 @@ class TradeComment(models.Model):
     points = models.IntegerField(default=0)
     post = models.ForeignKey(TradePost, on_delete=models.CASCADE)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
-
 

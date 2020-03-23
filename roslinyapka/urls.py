@@ -31,6 +31,7 @@ urlpatterns = [
     path('guide/', GuideView.as_view()),
     path('guides/', GuideListView.as_view()),
     path('profile/<int:id>', UserProfile.as_view()),
-    path('searchuser/',SearchUser.as_view() )
+    path('searchuser/',SearchUser.as_view() ),
+    path('test/', test.as_view())
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

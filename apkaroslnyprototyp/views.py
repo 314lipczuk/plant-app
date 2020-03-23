@@ -5,7 +5,6 @@ from apkaroslnyprototyp.models import TradePost, TradeComment, Guide, GuideComme
 from apkaroslnyprototyp.forms import TradeForm, GuideForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-import exifread
 class BaseView(View):
     def get(self, request):
         return render(request,'landing.html')
@@ -30,14 +29,13 @@ class TradeView(LoginRequiredMixin,View):
             new_trade.save()
             tp=TradePost.objects.get(title=id)
             p=Profile.objects.get(user_id = request.POST.get('creator'))
+            tp.latitude = request.POST.get('lat')
+            tp.longitude = request.POST.get('lon')
             tp.creator = p
             img = request.FILES['image']
             tp.image = img
             tp.save()
 
-            #f = open('', 'rb')
-            #tags = exifread.process_file(f)
-            #print(tags)
             return redirect('/')
 
 
@@ -108,3 +106,7 @@ class SearchUser(View):
         qry = request.GET.get('searchuser')
         result=User.objects.filter(username__contains=qry)
         return render(request, 'userlist.html', {'users':result})
+
+class test(View):
+    def get(self, request):
+        return render(request,'test.html')
