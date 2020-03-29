@@ -10,13 +10,17 @@
                 <h3 class="mb-0">{{ trade.title }}</h3>
                 <div class="mb-1 text-muted"> posted {{ trade.add_date }} by {{ trade.creator.user.username }}</div>
                 <p class="mb-auto">{{ trade.content }}</p>
+                <p id="points">Points: {{ trade.vote_total }} </p>
+                <p>
+                <div id="votes">
+                    <button style="height:20px;width:20px;" id="upvote"></button>
+                    <button style="height:20px;width:20px;" id="downvote"></button>
+                </div>
+                </p>
                 <a href="/offers/" class="stretched-link">Back to offer list</a>
             </div>
         </div>
     </div>
-
-
-
 
     {% if trade.image != null %}
     <div>
@@ -31,13 +35,67 @@
     {% for comment in comments %}
 {{ comment.content }}<br>
 </div>
+
 {% endfor %}
+
+
 {% endblock %}
 
 {% block javascript %}
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var $crsf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        let user = {{ request.user.profile.id }};
+        let vote;
+        let post = {{ trade.id }};
+        let brd = document.querySelector('#points');
+        let upv = document.querySelector('#upvote');
+        let down = document.querySelector('#downvote');
+        let order = {
+            userid: user,
+            vote: vote,
+            post: post,
+        };
+        upv.addEventListener('click', function () {
+            brd.innerHTML = "Points: {{ trade.total_downvotes }} +1, Vote processed";
+            order.vote = '+1';
+            $.ajax({
+                type: 'POST',
+                url: '/api/tradepost/',
+
+                data: order,
+                success: function () {
+                    console.log('Upvote succesfull')
+
+                },
+                error: function () {
+                    alert('upvote unsuccesfull')
+                }
+            })
+
+        });
+        down.addEventListener('click', function () {
+            brd.innerHTML = "Points: {{ trade.vote_total }} -1, Vote processed";
+            order.vote = '-1';
+            $.ajax({
+                type: 'POST',
+                url: '/api/tradepost/',
+
+                data: order,
+                success: function () {
+                    console.log('Downvote succesfull')
+
+                },
+                error: function () {
+                    alert('Downvote unsuccesfull')
+                }
+            })
+        });
+    })
+    </script>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
     <script>
-        var mymap = L.map('mapid').setView([52.237, 21.017], 11);
+        var mymap = L.map('mapid').setView([{{ trade.latitude }},{{ trade.longitude }}], 11);
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
             maxZoom: 18,
@@ -48,5 +106,6 @@
             tileSize: 512,
             zoomOffset: -1
         }).addTo(mymap);
+        L.marker([{{ trade.latitude }}, {{ trade.longitude }}]).addTo(mymap);
     </script>
 {% endblock %}

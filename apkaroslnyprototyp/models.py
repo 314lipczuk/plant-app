@@ -1,7 +1,10 @@
+import secretballot
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from secretballot.models import Vote
+from django.apps import apps
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.CharField(max_length=500, blank=True, null=True)
@@ -48,6 +51,7 @@ class TradePost(models.Model):
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
 
+secretballot.enable_voting_on(TradePost)
 
 class TradeComment(models.Model):
     content = models.CharField(max_length=500, null=False)

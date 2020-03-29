@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apkaroslnyprototyp',
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
+    'secretballot',
+
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'secretballot.middleware.SecretBallotUserIdMiddleware',
+
 ]
 
 ROOT_URLCONF = 'roslinyapka.urls'

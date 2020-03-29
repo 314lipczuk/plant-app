@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from apkaroslnyprototyp.views import *
 from roslinyapka import settings
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +33,8 @@ urlpatterns = [
     path('guides/', GuideListView.as_view()),
     path('profile/<int:id>', UserProfile.as_view()),
     path('searchuser/',SearchUser.as_view() ),
-    path('test/', test.as_view())
+    path('test/', test.as_view()),
+    path('api/tradepost/', csrf_exempt(TradeVote.as_view())),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

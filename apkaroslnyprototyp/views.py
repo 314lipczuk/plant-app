@@ -5,6 +5,9 @@ from apkaroslnyprototyp.models import TradePost, TradeComment, Guide, GuideComme
 from apkaroslnyprototyp.forms import TradeForm, GuideForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+import hashlib
+from secretballot.views import Vote
+
 class BaseView(View):
     def get(self, request):
         return render(request,'landing.html')
@@ -39,6 +42,12 @@ class TradeView(LoginRequiredMixin,View):
             return redirect('/')
 
 
+class TradeVote(View):
+    def post(self, request):
+        tradepost=TradePost.objects.get(pk= request.POST.get('post'))
+        ip = str(request.META.get('HTTP_X_FORWARDED_FOR')) + str(request.POST.get('userid'))
+        tradepost.add_vote(hashlib.md5(ip.encode('utf-8')).hexdigest(), request.POST.get('vote'))
+        return HttpResponse("")
 
 class ShowTrade(View):
     def get(self, request, id):
