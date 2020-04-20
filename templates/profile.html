@@ -11,4 +11,14 @@
     {% for guide in guides %}
         <p>{{ guide.title }},<a href="/guide/{{ guide.id }}">Details</a> </p>
     {% endfor %}
+
+    {% if form != Null %}
+    <form>
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="submit">
+    </form>
+    {% else %}
+
+    {% endif %}
 {% endblock %}

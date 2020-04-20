@@ -15,4 +15,7 @@ class GuideForm(ModelForm):
         model = Guide
         fields = ['title', 'content']
 
-
+class ProfieForm(ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio', 'location']

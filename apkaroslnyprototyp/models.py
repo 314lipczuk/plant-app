@@ -31,7 +31,7 @@ class Guide(models.Model):
     mod_date = models.DateTimeField(auto_now=True)
     points = models.IntegerField(default=0)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
-    #t odo dodac jeszcze mozliwosc dodawania jpgow
+secretballot.enable_voting_on(Guide)
 
 class GuideComment(models.Model):
     content = models.CharField(max_length=500, null=False)
@@ -39,6 +39,8 @@ class GuideComment(models.Model):
     points = models.IntegerField(default=0)
     guide = models.ForeignKey(Guide, on_delete=models.CASCADE)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
+secretballot.enable_voting_on(GuideComment)
+
 class TradePost(models.Model):
     title = models.CharField(max_length=100, null=False)
     add_date = models.DateTimeField(auto_now_add=True)
@@ -50,7 +52,6 @@ class TradePost(models.Model):
     image = models.ImageField(null=True)
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
-
 secretballot.enable_voting_on(TradePost)
 
 class TradeComment(models.Model):
@@ -59,4 +60,4 @@ class TradeComment(models.Model):
     points = models.IntegerField(default=0)
     post = models.ForeignKey(TradePost, on_delete=models.CASCADE)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
-
+secretballot.enable_voting_on(TradeComment)

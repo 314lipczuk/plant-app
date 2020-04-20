@@ -1,13 +1,13 @@
 from django.http import HttpResponse
+
 from django.shortcuts import render, redirect
 from django.views import View
 from apkaroslnyprototyp.models import TradePost, TradeComment, Guide, GuideComment, Profile
-from apkaroslnyprototyp.forms import TradeForm, GuideForm
+from apkaroslnyprototyp.forms import TradeForm, GuideForm, ProfieForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 import hashlib
 from secretballot.views import Vote
-
 class BaseView(View):
     def get(self, request):
         return render(request,'landing.html')
@@ -41,6 +41,9 @@ class TradeView(LoginRequiredMixin,View):
 
             return redirect('/')
 
+#class EditTrade(View):
+#    def get(self, request):
+
 
 class TradeVote(View):
     def post(self, request):
@@ -52,8 +55,28 @@ class TradeVote(View):
 class ShowTrade(View):
     def get(self, request, id):
         trade = TradePost.objects.get(pk=id)
-        return render(request, 'trade.html', {'trade':trade})
+        username = None
+        #return HttpResponse(trade.creator.user_id)
+        #return HttpResponse(request.user.id)
 
+        if str(trade.creator.user_id) == str(request.user.id):
+            form = TradeForm(instance=TradePost.objects.get(pk=id))
+
+            return render(request, 'trade.html', {'trade': trade,'form':form})
+        else:
+            return render(request, 'trade.html', {'trade': trade})
+    def post(self, request, id):
+        action = request.POST.get('destination')
+        trade = TradePost.objects.get(pk=id)
+        if str(trade.creator.user_id) == str(request.user.id):
+            new_trade = TradeForm(request.POST, instance=trade)
+            if action == 'edit':
+                if new_trade.is_valid():
+                    new_trade.save()
+                    return redirect(f'/trade/{id}')
+            elif action == 'delete':
+                trade.delete()
+                return HttpResponse('bits scrambled')
 class GuideView(LoginRequiredMixin, View):
     redirect_field_name = '/'
     login_url = '/'
@@ -108,8 +131,15 @@ class UserProfile(View):
         profile=Profile.objects.get(pk = id)
         posts = TradePost.objects.filter(creator=profile.id)
         guides= Guide.objects.filter(creator=profile.id)
-        return render(request, 'profile.html', {'profile':profile, 'posts':posts, 'guides':guides})
+        form = None
+        if str(profile.user.id) == str(request.user.id):
+            form = ProfieForm(instance=profile)
+        return render(request, 'profile.html', {'profile':profile, 'posts':posts, 'guides':guides,'form':form})
 
+    def post(self, request, id):
+        profile=Profile.objects.get(pk = id)
+        if str(profile.user.id) == str(request.user.id):
+            new_profile = Profile.objects.get(pk=id)
 class SearchUser(View):
     def get(self, request):
         qry = request.GET.get('searchuser')
