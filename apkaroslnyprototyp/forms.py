@@ -19,3 +19,4 @@ class ProfieForm(ModelForm):
     class Meta:
         model = Profile
         fields = ['bio', 'location']
+        widgets = {'bio':forms.Textarea()}

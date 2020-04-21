@@ -134,12 +134,20 @@ class UserProfile(View):
         form = None
         if str(profile.user.id) == str(request.user.id):
             form = ProfieForm(instance=profile)
-        return render(request, 'profile.html', {'profile':profile, 'posts':posts, 'guides':guides,'form':form})
+            return render(request, 'profile.html', {'profile':profile, 'posts':posts, 'guides':guides,'form':form})
+        else:
+            return render(request, 'profile.html', {'profile':profile, 'posts':posts, 'guides':guides})
 
     def post(self, request, id):
-        profile=Profile.objects.get(pk = id)
+        profile= Profile.objects.get(pk=id)
         if str(profile.user.id) == str(request.user.id):
-            new_profile = Profile.objects.get(pk=id)
+            new_profile = ProfieForm(request.POST, instance=profile)
+            if new_profile.is_valid():
+                new_profile.save()
+                return redirect(f'/profile/{id}')
+
+
+
 class SearchUser(View):
     def get(self, request):
         qry = request.GET.get('searchuser')
