@@ -124,8 +124,6 @@ class TradeListView(View):
             trades =trades.filter(plant_name__contains=filterspecies)
         return render(request,'tradelist.html', {'trades':trades})
 
-
-
 class UserProfile(View):
     def get(self, request, id):
         profile=Profile.objects.get(pk = id)
@@ -145,8 +143,6 @@ class UserProfile(View):
             if new_profile.is_valid():
                 new_profile.save()
                 return redirect(f'/profile/{id}')
-
-
 
 class SearchUser(View):
     def get(self, request):

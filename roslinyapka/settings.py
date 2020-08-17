@@ -79,14 +79,12 @@ WSGI_APPLICATION = 'roslinyapka.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+PROJECT_PATH = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 DATABASES = {
     'default': {
-        'HOST':'127.0.0.1',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'roslinkidb',
-        'USER':'postgres',
-        'PASSWORD':'coderslab'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_PATH, 'database.sqlite'),
     }
 }
 
