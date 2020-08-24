@@ -7,6 +7,7 @@ from apkaroslnyprototyp.forms import TradeForm, GuideForm, ProfieForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 import hashlib
+from django import forms
 from secretballot.views import Vote
 class BaseView(View):
     def get(self, request):
@@ -23,23 +24,26 @@ class TradeView(LoginRequiredMixin,View):
 
     def get(self, request):
         form = TradeForm()
+        form.fields['latitude'].widget = forms.HiddenInput()
+        form.fields['longitude'].widget = forms.HiddenInput()
+        form.fields['creator'].widget = forms.Textarea()
+        form.fields['creator'].widget = forms.HiddenInput()
         return render(request, 'add.html' , {'form':form})
 
+#This one utilizes the power of modelforms a bit more, still need to add client side validation in js.(or not, it doesnt explode as it is now. Yay i guess.)
     def post(self, request):
-        new_trade = TradeForm(request.POST)
+        new_trade = TradeForm(request.POST, request.FILES)
         if new_trade.is_valid():
+            print(request.FILES)
             id = new_trade.cleaned_data['title']
             new_trade.save()
-            tp=TradePost.objects.get(title=id)
-            p=Profile.objects.get(user_id = request.POST.get('creator'))
-            tp.latitude = request.POST.get('lat')
-            tp.longitude = request.POST.get('lon')
-            tp.creator = p
-            img = request.FILES['image']
-            tp.image = img
+            tp = TradePost.objects.get(title=id)
+            tp.image = new_trade.cleaned_data['image']
             tp.save()
+            return redirect('/offers')
+        else:
+           return HttpResponse("invalid")
 
-            return redirect('/')
 
 #class EditTrade(View):
 #    def get(self, request):
@@ -56,15 +60,14 @@ class ShowTrade(View):
     def get(self, request, id):
         trade = TradePost.objects.get(pk=id)
         username = None
-        #return HttpResponse(trade.creator.user_id)
-        #return HttpResponse(request.user.id)
 
-        if str(trade.creator.user_id) == str(request.user.id):
-            form = TradeForm(instance=TradePost.objects.get(pk=id))
 
-            return render(request, 'trade.html', {'trade': trade,'form':form})
-        else:
-            return render(request, 'trade.html', {'trade': trade})
+
+     #   if str(trade.creator.user_id) == str(request.user.id):
+     #       form = TradeForm(instance=TradePost.objects.get(pk=id))
+     #       return render(request, 'trade.html', {'trade': trade,'form':form})
+     #   else:
+        return render(request, 'trade.html', {'trade': trade})
     def post(self, request, id):
         action = request.POST.get('destination')
         trade = TradePost.objects.get(pk=id)

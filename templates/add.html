@@ -6,12 +6,8 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-     <input id="id_creator" type="hidden" name="creator" value="{{ request.user.id }}">
 
-    <input type="file" name="image">
     <input type="submit">
-    <input id="latitude" name="lat" type="hidden" value="">
-    <input id="longitude" name="lon" type="hidden" value="">
 </form>
     <div id="mapid" style="width: 600px; height: 400px;"></div>
 {% endblock %}
@@ -34,8 +30,8 @@
     mymap.on('click', function (data) {
         console.log(data);
         if (marker !== undefined){mymap.removeLayer(marker)};
-        document.getElementById("latitude").value =data.latlng.lat ;
-        document.getElementById("longitude").value =data.latlng.lng;
+        document.getElementById("id_latitude").value =data.latlng.lat ;
+        document.getElementById("id_longitude").value =data.latlng.lng;
         marker = L.marker([data.latlng.lat, data.latlng.lng],{title: "miejsce wymiany"}).addTo(mymap);
     });
 </script>

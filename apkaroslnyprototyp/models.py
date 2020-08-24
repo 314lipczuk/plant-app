@@ -46,12 +46,11 @@ class TradePost(models.Model):
     add_date = models.DateTimeField(auto_now_add=True)
     plant_name = models.CharField(max_length=128, null=True)
     is_active = models.BooleanField(default=True)
-    add_date = models.DateTimeField(auto_now_add=True)
     content = models.TextField(null=False)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
-    image = models.ImageField(null=True)
-    latitude = models.FloatField(null=True)
-    longitude = models.FloatField(null=True)
+    image = models.ImageField(upload_to='media/',blank=True,null=True)
+    latitude = models.FloatField(blank=True,null=True)
+    longitude = models.FloatField(blank=True,null=True)
 secretballot.enable_voting_on(TradePost)
 
 class TradeComment(models.Model):
